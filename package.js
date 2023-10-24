@@ -14,6 +14,7 @@ Package.onUse(function (api) {
   api.versionsFrom("2.0");
   api.use("ecmascript");
   api.use("typescript");
+  api.use("react-meteor-data");
 
   api.mainModule("connection-status-react.ts", "client", { lazy: true });
 });
