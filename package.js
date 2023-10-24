@@ -1,6 +1,6 @@
 Package.describe({
   name: "minhna:connection-status-react",
-  version: "0.0.3",
+  version: "0.0.4",
   // Brief, one-line summary of the package.
   summary: "React component for connection status",
   // URL to the Git repository containing the source code for this package.
