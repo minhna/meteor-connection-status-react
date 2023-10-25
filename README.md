@@ -27,7 +27,7 @@ export const App = () => (
 ```
   className?: string;
   style?: React.CSSProperties & {
-    container?: React.CSSProperties;
+    wrapper?: React.CSSProperties;
     statusContainer?: React.CSSProperties;
     retryContainer?: React.CSSProperties;
     connectBtn?: React.CSSProperties;
