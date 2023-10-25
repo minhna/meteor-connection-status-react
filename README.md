@@ -8,6 +8,42 @@ A React component shows current DDP connection status and allows to reconnect to
 
 `meteor add minhna:connection-status-react`
 
+Add to your react app:
+
+```
+import { ConnectionStatus } from "meteor/minhna:connection-status-react";
+
+export const App = () => (
+  <>
+    ...
+    <ConnectionStatus />
+  </>
+)
+
+```
+
+### Component props
+
+```
+  className?: string;
+  style?: React.CSSProperties & {
+    container?: React.CSSProperties;
+    statusContainer?: React.CSSProperties;
+    retryContainer?: React.CSSProperties;
+    connectBtn?: React.CSSProperties;
+  };
+  words?: {
+    retryIn?: string;
+    connectNow?: string;
+    second?: string;
+    seconds?: string;
+  } & { [key in DDP.Status]?: string };
+```
+
+- `className`: css class of the wrapper div element
+- `style`: overwrite the default styles
+- `words`: overwrite the default words
+
 ## TODO
 
 - Write some tests
