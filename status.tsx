@@ -8,7 +8,7 @@ import { SecondsCountdown } from "./countdown";
 export type ConnectionStatusProps = {
   className?: string;
   style?: React.CSSProperties & {
-    container?: React.CSSProperties;
+    wrapper?: React.CSSProperties;
     statusContainer?: React.CSSProperties;
     retryContainer?: React.CSSProperties;
     connectBtn?: React.CSSProperties;
@@ -88,7 +88,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
     }
 
     return (
-      <span className="retry-in" style={theStyle?.retryContainer}>
+      <span className='retry-in' style={theStyle?.retryContainer}>
         {words?.retryIn || "retry in"}{" "}
         <SecondsCountdown
           seconds={retryIn}
@@ -97,9 +97,10 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
         />
         .
         <button
-          className="connect-now"
+          className='connect-now'
           onClick={() => connectNow()}
-          style={theStyle?.connectBtn}>
+          style={theStyle?.connectBtn}
+        >
           {words?.connectNow || "Connect now"}
         </button>
       </span>
@@ -124,9 +125,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   const theStyle = { ...defaultStyle, ...style };
 
   return (
-    <div
-      className={`connection-status ${className}`}
-      style={theStyle?.container}>
+    <div className={`connection-status ${className}`} style={theStyle?.wrapper}>
       <span className={`status ${status}`} style={theStyle?.statusContainer}>
         {status && words?.[status] ? words[status] : status}
         {status === "waiting" ? ", " : ""}
@@ -137,7 +136,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
 };
 
 const defaultStyle: ConnectionStatusProps["style"] = {
-  container: {
+  wrapper: {
     position: "fixed",
     bottom: 0,
     left: 0,
