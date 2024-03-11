@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { DDP } from "meteor/ddp";
 import React, { useState, useEffect, useRef } from "react";
-import { useTracker } from "meteor/react-meteor-data";
+import { Tracker } from "meteor/tracker";
 
 import { SecondsCountdown } from "./countdown";
 
@@ -28,15 +28,24 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
 }) => {
   const [hidden, setHidden] = useState(true);
   const [disconnectedOnce, setDisconnectedOnce] = useState(false);
+  const [connected, setConnected] = useState(false);
+  const [status, setStatus] = useState<DDP.Status | undefined>(undefined);
+  const [retryTime, setRetryTime] = useState<number | undefined>(undefined);
 
-  const ddpStatus = useTracker<DDP.DDPStatus | undefined>(() => {
-    if (Meteor.isClient) {
+  const trackerComputation = useRef<Tracker.Computation | null>(null);
+  useEffect(() => {
+    trackerComputation.current = Tracker.autorun(() => {
       const connectionStatus = Meteor.status();
-      return connectionStatus;
-    }
+      // console.log("connectionStatus changed", connectionStatus);
+      setConnected(connectionStatus.connected);
+      setStatus(connectionStatus.status);
+      setRetryTime(connectionStatus.retryTime);
+    });
+    return () => {
+      // console.log("connectionStatus autorun stop");
+      trackerComputation.current?.stop();
+    };
   }, []);
-
-  const { connected, status, retryTime } = ddpStatus || {};
 
   useEffect(() => {
     if (retryTime !== undefined) {
@@ -67,7 +76,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   }, [connected]);
 
   useEffect(() => {
-    console.log("window.location.href", window.location.href);
+    // console.log("window.location.href", window.location.href);
     // try to reconnect when the url changes
     if (!connected && status === "waiting") {
       Meteor.reconnect();
@@ -120,7 +129,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
     return null;
   }
 
-  // console.log('connection status', connected, disconnectedOnce, status);
+  // console.log("render connectionStatus", connected, disconnectedOnce, status);
 
   const theStyle = { ...defaultStyle, ...style };
 

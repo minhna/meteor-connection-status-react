@@ -1,6 +1,6 @@
 Package.describe({
   name: "minhna:connection-status-react",
-  version: "0.0.9",
+  version: "0.3.1",
   // Brief, one-line summary of the package.
   summary: "React component for connection status",
   // URL to the Git repository containing the source code for this package.
@@ -12,7 +12,6 @@ Package.onUse(function (api) {
   api.versionsFrom("2.0");
   api.use("ecmascript");
   api.use("typescript@4.0.0 || 5.0.0");
-  api.use("react-meteor-data@1.0.0 || 2.0.0 || 3.0.0");
 
   api.mainModule("connection-status-react.ts", "client", { lazy: true });
 });
